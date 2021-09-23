@@ -1,0 +1,61 @@
+#{{ ansible_managed }}
+# This is a configuration file for Zabbix proxy daemon
+# To get more information about Zabbix, visit http://www.zabbix.com
+
+PidFile=/var/run/zabbix/zabbix_proxy.pid
+LogFile=/var/log/zabbix/zabbix_proxy.log
+LogFileSize=0
+
+{% if zabbix_proxy_mode is defined %}
+ProxyMode={{ zabbix_proxy_mode }}
+{% endif %}
+
+Server={{ zabbix_proxy_server }}
+
+{% if zabbix_server_listen_port is defined %}
+ServerPort={{ zabbix_proxy_server_port }}
+{% endif %}
+
+Hostname={{ zabbix_proxy_hostname }}
+
+{% if zabbix_proxy_listen_port is defined %}
+ListenPort={{ zabbix_proxy_listen_port }}
+{% endif %}
+
+SocketDir=/var/run/zabbix
+
+DBHost=127.0.0.1
+DBName={{ zabbix_proxy_dbname }}
+DBUser={{ zabbix_proxy_user }}
+DBPassword={{ zabbix_proxy_pass }}
+DBSocket=/var/run/mysqld/mysqld.sock
+{% if zabbix_proxy_db_port is defined %}
+DBPort={{ zabbix_proxy_db_port }}
+{% endif %}
+
+ConfigFrequency=100
+
+StartVMwareCollectors=5
+VMwareCacheSize=16M
+
+SNMPTrapperFile=/var/log/snmptrap/snmptrap.log
+
+CacheSize=16M
+
+Timeout=10
+
+ExternalScripts=/usr/lib/zabbix/externalscripts
+
+FpingLocation=/usr/bin/fping
+Fping6Location=/usr/bin/fping6
+
+LogSlowQueries=3000
+
+StatsAllowedIP=127.0.0.1
+
+{% if zabbix_proxy_psk is defined %}
+TLSConnect=psk
+TLSAccept=psk
+TLSPSKFile=/etc/zabbix/proxy.psk
+TLSPSKIdentity={{ zabbix_proxy_hostname }}
+{% endif %}

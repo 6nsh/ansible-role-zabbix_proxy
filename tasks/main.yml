@@ -1,2 +1,10 @@
 ---
-# tasks file for zabbix_proxy
+- import_tasks: install.yml
+  tags:
+    - install_zabbix_proxy
+    - install
+
+- import_tasks: configure.yml
+  tags:
+    - configure_zabbix_proxy
+    - configure

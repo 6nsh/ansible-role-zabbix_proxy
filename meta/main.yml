@@ -18,4 +18,4 @@ galaxy_info:
     - zabbix
     - zabbix-proxy
   dependencies:
-  - { role: banshee-art.mysql_server, tags: mysql_server }
+  - { role: banshee_art.mysql_server, tags: mysql_server }

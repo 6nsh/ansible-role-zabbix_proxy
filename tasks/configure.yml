@@ -1,0 +1,75 @@
+---
+- name: Backup official zabbix_proxy.conf
+  copy:
+    remote_src: true 
+    src: /etc/zabbix/zabbix_proxy.conf
+    dest: /etc/zabbix/zabbix_proxy.conf.bkp
+
+- name: Copy a new zabbix_proxy.conf with our variables
+  template:
+    src: zabbix_proxy.conf.j2
+    dest: /etc/zabbix/zabbix_proxy.conf
+    owner: root
+    group: root
+    mode: '0640'
+  notify:
+    - restart zabbix-proxy service
+
+- name: create directory for scripts
+  file:
+    path: /usr/lib/zabbix/externalscripts
+    state: directory
+
+- name: copy external scripts
+  copy:
+    src: "{{ item.src }}"
+    dest: /usr/lib/zabbix/externalscripts/{{ item.dest }}
+    owner: zabbix
+    group: zabbix
+    mode: '0755'
+  with_items:
+    - { src: nginx-stats.sh, dest: nginx-stats.sh }
+  notify:
+    - restart zabbix-proxy service
+
+- name: Install Zabbix MySQL scripts
+  apt:
+    name: zabbix-sql-scripts
+    state: latest
+    update_cache: yes
+    cache_valid_time: 600
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+  notify:
+    - restart zabbix-proxy service
+
+- name: Create MySQL database for Zabbix Proxy
+  mysql_db:
+    name: "{{ zabbix_proxy_dbname }}"
+    state: present
+
+- name: Import schema.sql to Zabbix Proxy database
+  mysql_db:
+    name: "{{ zabbix_proxy_dbname }}"
+    state: present
+    encoding: utf8_bin
+    target: /usr/share/doc/zabbix-sql-scripts/mysql/schema.sql.gz
+
+- name: create the database user
+  no_log: true
+  mysql_user:
+    name: "{{ zabbix_proxy_user }}"
+    password: "{{ zabbix_proxy_pass }}"
+    priv: "{{ zabbix_proxy_dbname }}.*:ALL"
+    host: localhost
+    state: present
+
+- name: Add psk key for Zabbix Proxy
+  template:
+    src: proxy.psk.j2
+    dest: /etc/zabbix/proxy.psk
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  notify:
+    - restart zabbix-proxy service
