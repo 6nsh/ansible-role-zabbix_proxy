@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  role_name: zabbix_proxy
+  author: Artem Kasianchuk
+  description: Install and configure Zabbix Proxy
+  license: license (GPL-2.0-or-later, MIT, etc)
+  min_ansible_version: 2.9
+  platforms:
+  - name: Debian
+    versions:
+    - bullseye
+    - buster
+    - stretch
+  galaxy_tags:
+    - system
+    - debian
+    - monitoring
+    - zabbix
+    - zabbix-proxy
+  dependencies:
+  - { role: banshee-art.mysql_server, tags: mysql_server }
