@@ -1,9 +1,15 @@
 ---
+- name: Check if zabbix_proxy.conf.bkp file exists
+  stat: 
+    path: /etc/zabbix/zabbix_proxy.conf.bkp
+  register: conf_bkp_rules
+
 - name: Backup official zabbix_proxy.conf
   copy:
     remote_src: true 
     src: /etc/zabbix/zabbix_proxy.conf
     dest: /etc/zabbix/zabbix_proxy.conf.bkp
+  when: conf_bkp_rules.stat.exists == false
 
 - name: Copy a new zabbix_proxy.conf with our variables
   template:
