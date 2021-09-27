@@ -57,8 +57,8 @@
 - name: Import schema.sql to Zabbix Proxy database
   mysql_db:
     name: "{{ zabbix_proxy_dbname }}"
-    state: present
-    encoding: utf8_bin
+    state: import
+#    encoding: utf8_bin
     target: /usr/share/doc/zabbix-sql-scripts/mysql/schema.sql.gz
 
 - name: create the database user
