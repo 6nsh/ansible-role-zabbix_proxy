@@ -27,7 +27,7 @@ SocketDir=/var/run/zabbix
 DBHost=127.0.0.1
 DBName={{ zabbix_proxy_dbname }}
 DBUser={{ zabbix_proxy_user }}
-DBPassword="{{ zabbix_proxy_pass }}"
+DBPassword={{ zabbix_proxy_pass }}
 DBSocket=/var/run/mysqld/mysqld.sock
 {% if zabbix_proxy_db_port is defined %}
 DBPort={{ zabbix_proxy_db_port }}
