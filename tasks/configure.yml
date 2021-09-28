@@ -61,7 +61,7 @@
 #    encoding: utf8_bin
     target: /usr/share/doc/zabbix-sql-scripts/mysql/schema.sql.gz
 
-- name: create the database user
+- name: Create the database user
   no_log: true
   mysql_user:
     name: "{{ zabbix_proxy_user }}"
