@@ -43,7 +43,7 @@
     name: zabbix-sql-scripts
     state: latest
     update_cache: yes
-    cache_valid_time: 600
+    # cache_valid_time: 600
   environment:
     DEBIAN_FRONTEND: noninteractive
   notify:
@@ -53,13 +53,8 @@
   mysql_db:
     name: "{{ zabbix_proxy_dbname }}"
     state: present
-
-- name: Import schema.sql to Zabbix Proxy database
-  mysql_db:
-    name: "{{ zabbix_proxy_dbname }}"
-    state: import
-#    encoding: utf8_bin
-    target: /usr/share/doc/zabbix-sql-scripts/mysql/schema.sql.gz
+  notify:
+    - import schema to zabbix-proxy database
 
 - name: Create the database user
   no_log: true

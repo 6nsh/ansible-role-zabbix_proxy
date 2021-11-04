@@ -1,17 +1,17 @@
 ---
 # handlers file for zabbix_proxy
-- name: check zabbix-proxy version
-  shell: zabbix_proxy --version
-
 - name: enable zabbix-proxy service
   service:
     name: zabbix-proxy
     enabled: yes
 
-- name: check zabbix-proxy service status
-  shell: systemctl status zabbix-proxy
-
 - name: restart zabbix-proxy service
   service:
     name: zabbix-proxy
     state: restarted
+
+- name: import schema to zabbix-proxy database
+  mysql_db:
+    name: "{{ zabbix_proxy_dbname }}"
+    state: import
+    target: /usr/share/doc/zabbix-sql-scripts/mysql/schema.sql.gz

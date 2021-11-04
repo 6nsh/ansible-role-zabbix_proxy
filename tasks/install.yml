@@ -23,7 +23,7 @@
     name: zabbix-proxy-mysql
     state: latest
     update_cache: yes
-    cache_valid_time: 600
+    # cache_valid_time: 600
   environment:
     DEBIAN_FRONTEND: noninteractive
   notify:
