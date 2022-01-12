@@ -1,6 +1,7 @@
 ---
 galaxy_info:
   role_name: zabbix_proxy
+  namespace: 6nsh
   author: Artem Kasianchuk
   description: Install and configure Zabbix Proxy
   license: license (GPL-2.0-or-later, MIT, etc)
@@ -16,6 +17,9 @@ galaxy_info:
     - debian
     - monitoring
     - zabbix
-    - zabbix-proxy
+    - zabbix_proxy
   dependencies:
-  - { role: banshee_art.mysql_server, tags: mysql_server }
+    - role: 6nsh.mysql_server
+      tags: mysql_server
+      vars:
+        mysql_root_password: '{{ mysql_root_password | mandatory }}'
