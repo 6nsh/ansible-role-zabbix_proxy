@@ -2,6 +2,14 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: "Include zabbix_proxy"
+    - name: Install requirements
+      apt:
+        name: gnupg
+        state: present
+        update_cache: true
+    - name: "Dependency role for MySQL Server"
       include_role:
-        name: "zabbix_proxy"
+        name: "6nsh.mysql_server"
+    - name: "Include 6nsh.zabbix_proxy"
+      include_role:
+        name: "6nsh.zabbix_proxy"

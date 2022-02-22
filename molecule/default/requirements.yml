@@ -1,0 +1,2 @@
+---
+- role: 6nsh.mysql_server

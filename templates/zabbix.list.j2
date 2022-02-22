@@ -2,8 +2,6 @@
 {% set release = "bullseye" %}
 {% elif ansible_distribution_major_version == '10' %}
 {% set release = "buster" %}
-{% elif ansible_distribution_major_version == '9' %}
-{% set release = "stretch" %}
 {% endif %}
 deb https://repo.zabbix.com/zabbix/5.4/debian {{ release }} main
 deb-src https://repo.zabbix.com/zabbix/5.4/debian {{ release }} main

@@ -3,7 +3,7 @@
 - name: enable zabbix-proxy service
   service:
     name: zabbix-proxy
-    enabled: yes
+    enabled: true
 
 - name: restart zabbix-proxy service
   service:
@@ -15,3 +15,4 @@
     name: "{{ zabbix_proxy_dbname }}"
     state: import
     target: /usr/share/doc/zabbix-sql-scripts/mysql/schema.sql.gz
+    force: true

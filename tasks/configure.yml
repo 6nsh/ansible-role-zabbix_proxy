@@ -1,15 +1,16 @@
 ---
 - name: Check if zabbix_proxy.conf.bkp file exists
-  stat: 
+  stat:
     path: /etc/zabbix/zabbix_proxy.conf.orig
   register: conf_orig_rules
 
 - name: Backup(copy) official zabbix_proxy.conf
   copy:
-    remote_src: true 
+    remote_src: true
     src: /etc/zabbix/zabbix_proxy.conf
     dest: /etc/zabbix/zabbix_proxy.conf.orig
-  when: conf_orig_rules.stat.exists == false
+    mode: '0640'
+  when: not conf_orig_rules.stat.exists
 
 - name: Copy a new zabbix_proxy.conf with our variables
   template:
@@ -25,6 +26,7 @@
   file:
     path: /usr/lib/zabbix/externalscripts
     state: directory
+    mode: '0755'
 
 - name: Copy external scripts
   copy:
@@ -34,16 +36,15 @@
     group: zabbix
     mode: '0755'
   with_items:
-    - { src: nginx-stats.sh, dest: nginx-stats.sh }
+    - {src: nginx-stats.sh, dest: nginx-stats.sh}
   notify:
     - restart zabbix-proxy service
 
 - name: Install Zabbix MySQL scripts
   apt:
     name: zabbix-sql-scripts
-    state: latest
-    update_cache: yes
-    # cache_valid_time: 600
+    state: present
+    update_cache: true
   environment:
     DEBIAN_FRONTEND: noninteractive
   notify:
@@ -69,8 +70,8 @@
   template:
     src: proxy.psk.j2
     dest: /etc/zabbix/proxy.psk
-    owner: 'root'
-    group: 'root'
+    owner: "root"
+    group: "root"
     mode: '0644'
   notify:
     - restart zabbix-proxy service
