@@ -1,6 +1,6 @@
 # Ansible Role for Zabbix Proxy 5.4
 
-![Build Status](https://github.com/6nsh/ansible-role-zabbix_server/actions/workflows/ansible-galaxy-ci.yml/badge.svg)
+![Build Status](https://github.com/6nsh/ansible-role-zabbix_proxy/actions/workflows/ansible-galaxy-ci.yml/badge.svg)
 
 This role helps to install and configure Zabbix Proxy 5.4 to Debian (buster/bullseye).
 
