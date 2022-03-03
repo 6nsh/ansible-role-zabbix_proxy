@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         distro:
-          - buster
+          # - buster
           - bullseye
     steps:
       - name: checkout
