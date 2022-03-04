@@ -1,5 +1,13 @@
 ---
 # handlers file for zabbix_proxy
+
+- name: import schema to zabbix-proxy database
+  mysql_db:
+    name: "{{ zabbix_proxy_dbname }}"
+    state: import
+    target: /usr/share/doc/zabbix-sql-scripts/mysql/schema.sql.gz
+    force: true
+
 - name: enable zabbix-proxy service
   service:
     name: zabbix-proxy
@@ -9,10 +17,3 @@
   service:
     name: zabbix-proxy
     state: restarted
-
-- name: import schema to zabbix-proxy database
-  mysql_db:
-    name: "{{ zabbix_proxy_dbname }}"
-    state: import
-    target: /usr/share/doc/zabbix-sql-scripts/mysql/schema.sql.gz
-    force: true
