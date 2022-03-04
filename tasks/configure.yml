@@ -37,8 +37,8 @@
     mode: '0755'
   with_items:
     - {src: nginx-stats.sh, dest: nginx-stats.sh}
-  notify:
-    - restart zabbix-proxy service
+  # notify:
+  #   - restart zabbix-proxy service
 
 - name: Install Zabbix MySQL scripts
   apt:
@@ -47,8 +47,8 @@
     update_cache: true
   environment:
     DEBIAN_FRONTEND: noninteractive
-  notify:
-    - restart zabbix-proxy service
+  # notify:
+  #   - restart zabbix-proxy service
 
 - name: Create MySQL database for Zabbix Proxy
   mysql_db:
