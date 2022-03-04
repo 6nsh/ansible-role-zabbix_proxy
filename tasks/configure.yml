@@ -19,8 +19,8 @@
     owner: root
     group: root
     mode: '0640'
-  notify:
-    - restart zabbix-proxy service
+  # notify:
+  #   - restart zabbix-proxy service
 
 - name: Create directory for scripts
   file:

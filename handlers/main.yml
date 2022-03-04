@@ -10,6 +10,11 @@
     name: zabbix-proxy
     state: restarted
 
+- name: status zabbix-proxy service
+  service:
+    name: zabbix-proxy
+    state: status
+
 - name: import schema to zabbix-proxy database
   mysql_db:
     name: "{{ zabbix_proxy_dbname }}"

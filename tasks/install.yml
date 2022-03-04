@@ -27,5 +27,5 @@
   environment:
     DEBIAN_FRONTEND: noninteractive
   notify:
-    # - restart zabbix-proxy service
+    - status zabbix-proxy service
     - enable zabbix-proxy service
