@@ -73,5 +73,5 @@
     owner: "root"
     group: "root"
     mode: '0644'
-  notify:
-    - restart zabbix-proxy service
+  # notify:
+  #   - restart zabbix-proxy service
